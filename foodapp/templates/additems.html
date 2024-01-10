@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="card-body">
+                    <h3 class="card-title" STYLE="color:orange">ADD FRUIT ITEMS...!</h3>
+
+                    <form class="forms-sample" method="post" action="{% url 'saveitem' %}" enctype="multipart/form-data" >
+                        {% csrf_token %}
+
+                      <div class="form-group">
+                        <label for=>Category</label><br>
+                        <select name="cat">
+                            <option value="select category">select category</option>
+                            {% for i in item %}
+                            <option>{{i.Category}}</option>
+                            {% endfor %}
+                        </select><br><br>
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleTextarea1">Fruit Item</label><br>
+                        <input type="text" placeholder="Items" name="item">  <br><br>
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleTextarea1">Description</label>
+                        <textarea class="form-control" id="exampleTextarea1" rows="4" name="desc"></textarea><br>
+                      </div>
+                       <div class="form-group">
+                        <label for="exampleTextarea1">Price</label><br>
+                       <input type="text" placeholder="Price" name="price"><br><br>
+                      </div>
+                        <label>Fruit Image</label><br>
+                        <input type="file" name="img"><br><br>
+                     <div class="button_block"><button type="submit" class="btn cur-p btn-warning">Submit</button></div><br>
+                      <button class="btn btn-dark">Cancel</button>
+                    </form>
+                  </div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+{% if messages %}
+   {% for i in messages %}
+      {% if i.tags == 'warning' %}
+         <script>
+             swal('{{i}}','','warning');
+         </script>
+      {% elif i.tags == 'error' %}
+         <script>
+             swal('{{i}}','','error');
+         </script>
+      {% elif i.tags == 'success' %}
+         <script>
+             swal('{{i}}','','success');
+         </script>
+      {% else %}
+         <script>
+             swal('{{i}}','','info');
+         </script>
+      {% endif %}
+   {% endfor %}
+{% endif %}
+</body>
+</html>
+{% endblock %}
